@@ -33,8 +33,6 @@ def test_get_mask_card_number_invalid_length(card_number):
     assert get_mask_card_number(card_number) == "Длина карты должна состоять минимум  из 4, максимум из 16 символов."
 
 
-
-
 @pytest.mark.parametrize("account, expected", [
     (12345678, "**5678"),
     (9876543210123456, "**3456"),
