@@ -1,5 +1,6 @@
 import pytest
-from src.widget import mask_account_card, get_date
+
+from src.widget import get_date, mask_account_card
 
 
 @pytest.fixture
@@ -36,21 +37,21 @@ def test_mask_account_card_invalid_input(input_str):
         mask_account_card(input_str)
 
 
-@pytest.mark.parametrize("input_date, expected", [
+@pytest.mark.parametrize("date_string, expected", [
     ("2024-03-11T02:26:18.671407", "11.03.2024"),
-    ("2022-12-01T00:00:00.000000", "01.12.2022"),
+    ("2023-12-01T23:59:59", "01.12.2023"),
+    ("2020-01-01", "01.01.2020")
 ])
-def test_get_date_valid(input_date, expected):
-    assert get_date(input_date) == expected
+def test_get_date_valid(date_string, expected):
+    assert get_date(date_string) == expected
 
 
-@pytest.mark.parametrize("invalid_date", [
+@pytest.mark.parametrize("invalid_input", [
     "invalid-date",
     "2024/03/11",
-    "2024-03-11",  # без 'T'
-    "",
-    None,
+    "",        # пустая строка
+    None       # тип не строка
 ])
-def test_get_date_invalid(invalid_date):
-    with pytest.raises((AttributeError, IndexError, TypeError)):
-        get_date(invalid_date)
+def test_get_date_invalid(invalid_input):
+    with pytest.raises(ValueError, match="Некорректный формат даты."):
+        get_date(invalid_input)

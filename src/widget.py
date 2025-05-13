@@ -35,9 +35,12 @@ def mask_account_card(info_to_mask: str) -> str:
 
 
 def get_date(date_string: str) -> str:
-    """Преобразование строки даты из формата YYYY-MM-DDTHH:MM:SS в DD.MM.YYYY."""
+    """Преобразует строку даты из формата YYYY-MM-DD или YYYY-MM-DDTHH:MM:SS в DD.MM.YYYY."""
+    if not isinstance(date_string, str):
+        raise ValueError("Некорректный формат даты.")
     try:
-        date_parts = date_string.split("T")[0].split("-")
-        return f"{date_parts[2]}.{date_parts[1]}.{date_parts[0]}"
-    except (AttributeError, IndexError):
+        date_only = date_string.split("T")[0]  # разделяем дату и время
+        year, month, day = date_only.split("-")  # разделяем на год, месяц и день
+        return f"{day}.{month}.{year}"
+    except Exception:
         raise ValueError("Некорректный формат даты.")
