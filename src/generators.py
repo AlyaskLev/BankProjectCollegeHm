@@ -1,4 +1,5 @@
-from typing import Iterator, Dict, Any
+from typing import Any, Dict, Iterator
+
 
 def filter_by_currency(transactions: list[Dict[str, Any]], currency: str) -> Iterator[Dict[str, Any]]:
     """Фильтрует транзакции по валюте и возвращает итератор."""
