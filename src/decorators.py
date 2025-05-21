@@ -1,10 +1,12 @@
 import logging
 from functools import wraps
+from typing import Callable, Any
 
-def log(filename=None):
-    def decorator(func):
+
+def log(filename: str | None = None) -> Callable[[Callable], Callable]:
+    def decorator(func: Callable) -> Callable:
         @wraps(func)
-        def wrapper(*args, **kwargs):
+        def wrapper(*args: Any, **kwargs: Any) -> Any:
             # настройка логирования
             logger = logging.getLogger(func.__name__)
             logger.setLevel(logging.INFO)

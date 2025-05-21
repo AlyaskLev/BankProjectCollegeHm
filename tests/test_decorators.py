@@ -1,9 +1,10 @@
-import pytest
 import logging
 from pathlib import Path
 
+import pytest
 
 from src.decorators import log
+
 
 @pytest.fixture(autouse=True)
 def clear_log_handlers():
@@ -39,7 +40,7 @@ def test_function_exception(caplog):
     ), "Ошибка не была зафиксирована в логе"
 
 def test_file_logging():
-    logfile = "./log.txt"  # Постоянный путь к файлу
+    logfile = "./test_log.txt"  # Постоянный путь к файлу
     @log(logfile)
     def write_to_file():
         pass
@@ -51,7 +52,6 @@ def test_file_logging():
         assert 'write_to_file ok' in contents, "Запись в файл отсутствовала"
 
 def test_correct_function_name(caplog):
-    """Проверяет правильное отображение имени функции в логах."""
     @log()
     def another_function():
         pass
