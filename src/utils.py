@@ -1,5 +1,6 @@
-import os
 import json
+import os
+
 
 def load_transactions(filepath: str) -> list[dict]:
     """Загружает транзакции из JSON-файла"""
