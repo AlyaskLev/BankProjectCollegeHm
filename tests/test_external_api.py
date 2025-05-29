@@ -13,7 +13,13 @@ def test_convert_to_rub_usd(mock_get, monkeypatch):
     mock_resp.status_code = 200
     mock_resp.json.return_value = {"rates": {"RUB": 75.0}}
 
-    tx = {"amount": 100, "currency": "USD"}
+    tx = {
+        "operationAmount": {
+            "amount": 100,
+            "currency": {"code": "USD"}
+        }
+    }
+
     result = convert_to_rub(tx)
     assert isinstance(result, float)
     assert result == 7500.0
@@ -27,7 +33,13 @@ def test_convert_to_rub_eur(mock_get, monkeypatch):
     mock_resp.status_code = 200
     mock_resp.json.return_value = {"rates": {"RUB": 90.0}}
 
-    tx = {"amount": 50, "currency": "EUR"}
+    tx = {
+        "operationAmount": {
+            "amount": 50,
+            "currency": {"code": "EUR"}
+        }
+    }
+
     result = convert_to_rub(tx)
     assert result == 4500.0
 
@@ -43,7 +55,13 @@ def test_convert_to_rub_rub_no_request(monkeypatch):
 
     monkeypatch.setattr("src.external_api.requests.get", fake_get)
 
-    tx = {"amount": 123.45, "currency": "RUB"}
+    tx = {
+        "operationAmount": {
+            "amount": 123.45,
+            "currency": {"code": "RUB"}
+        }
+    }
+
     result = convert_to_rub(tx)
     assert result == 123.45
     assert called is False
@@ -57,6 +75,12 @@ def test_convert_to_rub_api_error(mock_get, monkeypatch):
     mock_resp.status_code = 500
     mock_resp.json.return_value = {}
 
-    tx = {"amount": 10, "currency": "USD"}
+    tx = {
+        "operationAmount": {
+            "amount": 10,
+            "currency": {"code": "USD"}
+        }
+    }
+
     result = convert_to_rub(tx)
     assert result == 0.0
