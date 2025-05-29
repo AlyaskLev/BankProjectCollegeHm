@@ -1,9 +1,10 @@
 import json
 import os
-from typing import Any, Dict
+
 from src.log_config import setup_logger
 
 logger = setup_logger("utils", "utils.log")
+
 
 def load_transactions(filepath: str) -> list[dict]:
     if not os.path.exists(filepath):

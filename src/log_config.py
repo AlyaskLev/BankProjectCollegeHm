@@ -1,5 +1,5 @@
-import os
 import logging
+import os
 
 # Получаем путь к корню проекта (на уровень выше src)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -7,6 +7,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Путь к директории logs в корне проекта
 LOG_DIR = os.path.join(BASE_DIR, "logs")
 os.makedirs(LOG_DIR, exist_ok=True)  # создаст logs/, если нет
+
 
 def setup_logger(name: str, filename: str, level=logging.DEBUG):
     logger = logging.getLogger(name)
